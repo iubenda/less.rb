@@ -47,8 +47,11 @@ module Less
           case val
           when Symbol, Pathname then val.to_s
           when Array
-            val.map!(&:to_s) if key.to_sym == :paths # might contain Pathname-s
-            val # keep the original passed Array
+            if key.to_sym == :paths # might contain Pathname-s
+              val.map(&:to_s)
+            else
+              val # keep the original passed Array
+            end
           else val # true/false/String/Method
           end
       end
